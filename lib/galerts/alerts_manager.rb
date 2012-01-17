@@ -147,6 +147,10 @@ module Galerts
 			find({:query => query})
 		end
 
+                def find_by_state(state)
+                  find({:state => state})
+                end
+
 		def inspect
 			to_s
 		end
