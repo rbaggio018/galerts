@@ -75,6 +75,7 @@ module Galerts
 			create_form.t = ALERT_TYPES[type]
 			create_form.l = VOLS_TYPES[volume]
 			resp = @agent.submit(create_form)
+                        domain = map_domain(domain)
 			alerts = find({:query => query,:domain => domain,:feed => feed,:type => type})
 			alert = alerts.first
 			alert.nil? || alert.active? ? alert : verify!(alert)
@@ -205,6 +206,15 @@ module Galerts
 			@agent.redirect_ok = true	
 			@agent.follow_meta_refresh = true
 		end
+
+                def map_domain(domain)
+                  case domain
+                  when "it.ao"; "co.ao"
+                  when "com.by"; "by"
+                  when "com.tn"; "tn"
+                  else domain
+                  end
+                end
 
 	end
 end
